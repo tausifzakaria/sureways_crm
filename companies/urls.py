@@ -1,2 +1,5 @@
 from django.urls import path
-urlpatterns = []
+from .views import CompanyManagement
+urlpatterns = [
+    path('', CompanyManagement, name='companies_management'),
+]

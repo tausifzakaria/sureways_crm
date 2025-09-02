@@ -1,2 +1,5 @@
 from django.urls import path
-urlpatterns = []
+from .views import ContactManagement
+urlpatterns = [
+    path('', ContactManagement, name='contacts_management'),
+]

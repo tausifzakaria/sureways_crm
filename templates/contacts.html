@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block title %}Contact Management{% endblock %}
+{% block content %}
+<div class="mb-3">
+    <h4 class="text-color m-0 p-0">Contact Management</h4>
+    <small>Manage all companies data.</small>
+</div>
+<div class="text-end">
+    <button class="btn btn-warning me-2"><i class="bi bi-camera-fill"></i> Scan</button>
+    <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+            class="bi bi-plus-lg"></i> Add Contact</button>
+    <div class="modal text-start fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="modal-body row g-3">
+                        <!-- Full Name -->
+                        <div class="col-md-6">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" placeholder="Enter full name">
+                        </div>
+                        <!-- Job Title -->
+                        <div class="col-md-6">
+                            <label for="jobTitle" class="form-label">Job Title</label>
+                            <input type="text" class="form-control" id="jobTitle" placeholder="Enter job title">
+                        </div>
+                        <!-- Department -->
+                        <div class="col-md-6">
+                            <label for="department" class="form-label">Department / Function</label>
+                            <select id="department" class="form-select">
+                                <option selected disabled>Choose...</option>
+                                <option>Procurement</option>
+                                <option>Logistics</option>
+                                <option>Finance</option>
+                                <option>Owner</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label for="email" class="form-label">Email (Primary)</label>
+                            <input type="email" class="form-control" id="email" placeholder="example@domain.com">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email2" class="form-label">Email (Secondary)</label>
+                            <input type="email" class="form-control" id="email2" placeholder="example@domain.com">
+                        </div>
+                        <!-- Mobile -->
+                        <div class="col-md-6">
+                            <label for="mobile" class="form-label">Mobile</label>
+                            <input type="text" class="form-control" id="mobile" placeholder="+91 9876543210">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="whatsapp" class="form-label">WhatsApp</label>
+                            <input type="text" class="form-control" id="whatsapp" placeholder="+91 9876543210">
+                        </div>
+                        <!-- Speciality -->
+                        <div class="col-md-6">
+                            <label for="speciality" class="form-label">Speciality</label>
+                            <select id="speciality" class="form-select">
+                                <option selected disabled>Choose...</option>
+                                <option>Plastics</option>
+                                <option>Polymers</option>
+                                <option>FMCG</option>
+                                <option>Machinery</option>
+                                <option>Chemicals</option>
+                            </select>
+                        </div>
+                        <!-- Country -->
+                        <div class="col-md-6">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="country" placeholder="Enter country">
+                        </div>
+                        <!-- City -->
+                        <div class="col-md-6">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" placeholder="Enter city">
+                        </div>
+                        <!-- Tags -->
+                        <div class="col-md-6">
+                            <label for="tags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="tags" placeholder="e.g. Top Client, New Lead">
+                        </div>
+                        <!-- Source -->
+                        <div class="col-md-6">
+                            <label for="source" class="form-label">Source</label>
+                            <select id="source" class="form-select">
+                                <option selected disabled>Choose...</option>
+                                <option>Card Scan</option>
+                                <option>Exhibition</option>
+                                <option>Referral</option>
+                                <option>Import</option>
+                                <option>Web Form</option>
+                            </select>
+                        </div>
+                        <!-- Notes -->
+                        <div class="col-12">
+                            <label for="notes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="notes" rows="3"
+                                placeholder="Enter any additional notes"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive my-4">
+    <table class="table">
+        <thead class="bg-custom">
+            <tr class="bg-custom">
+                <th class="bg-custom" scope="col">Contact Name</th>
+                <th class="bg-custom" scope="col">Website</th>
+                <th class="bg-custom" scope="col">Main Phone</th>
+                <th class="bg-custom" scope="col">Industry</th>
+                <th class="bg-custom" scope="col">Country & City</th>
+                <th class="bg-custom" scope="col">Address</th>
+                <th class="bg-custom" scope="col">Tags</th>
+                <th class="bg-custom" scope="col">Source</th>
+                <th class="bg-custom" scope="col">Notes</th>
+                <th class="bg-custom" scope="col">Linked Contacts</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Contact Name</td>
+                <td>Website</td>
+                <td>Main Phone</td>
+                <td>Industry</td>
+                <td>Country & City</td>
+                <td>Address</td>
+                <td>Tags</td>
+                <td>Source</td>
+                <td>Notes</td>
+                <td>Linked Contacts</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

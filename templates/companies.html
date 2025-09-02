@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block title %}Company Management{% endblock %}
+{% block content %}
+<div class="mb-3">
+    <h4 class="text-color m-0 p-0">Company Management</h4>
+    <small>Manage all companies data.</small>
+</div>
+<div class="text-end">
+    <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+            class="bi bi-plus-lg"></i> Add Company</button>
+    <div class="modal text-start fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Company</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form>
+                    <div class="modal-body row g-3">
+                        <!-- Company Name -->
+                        <div class="col-md-6">
+                            <label for="companyName" class="form-label">Company Name</label>
+                            <input type="text" class="form-control" id="companyName" placeholder="Enter company name">
+                        </div>
+
+                        <!-- Website -->
+                        <div class="col-md-6">
+                            <label for="website" class="form-label">Website</label>
+                            <input type="url" class="form-control" id="website" placeholder="https://example.com">
+                        </div>
+
+                        <!-- Main Phone -->
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label">Main Phone</label>
+                            <input type="text" class="form-control" id="phone" placeholder="+91 9876543210">
+                        </div>
+
+                        <!-- Industry -->
+                        <div class="col-md-6">
+                            <label for="industry" class="form-label">Industry</label>
+                            <select id="industry" class="form-select">
+                                <option selected disabled>Choose...</option>
+                                <option>Plastics</option>
+                                <option>FMCG</option>
+                                <option>Steel</option>
+                                <option>Chemicals</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Country & City -->
+                        <div class="col-md-6">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" class="form-control" id="country" placeholder="Enter country">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label for="city" class="form-label">City</label>
+                            <input type="text" class="form-control" id="city" placeholder="Enter city">
+                        </div>
+
+                        <!-- Address -->
+                        <div class="col-12">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" rows="2"
+                                placeholder="Enter company address"></textarea>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="col-md-6">
+                            <label for="tags" class="form-label">Tags</label>
+                            <input type="text" class="form-control" id="tags"
+                                placeholder="e.g. Supplier, Customer, Forwarder">
+                        </div>
+
+                        <!-- Source -->
+                        <div class="col-md-6">
+                            <label for="source" class="form-label">Source</label>
+                            <select id="source" class="form-select">
+                                <option selected disabled>Choose...</option>
+                                <option>Exhibition</option>
+                                <option>Referral</option>
+                                <option>Import</option>
+                                <option>Web Form</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <!-- Notes -->
+                        <div class="col-12">
+                            <label for="notes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="notes" rows="3"
+                                placeholder="Enter any additional notes"></textarea>
+                        </div>
+
+                        <!-- Linked Contacts -->
+                        <div class="col-12">
+                            <label for="linkedContacts" class="form-label">Linked Contacts</label>
+                            <input type="text" class="form-control" id="linkedContacts"
+                                placeholder="Enter linked contacts">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="table-responsive my-4">
+    <table class="table">
+        <thead class="bg-custom">
+            <tr class="bg-custom">
+                <th class="bg-custom" scope="col">Company Name</th>
+                <th class="bg-custom" scope="col">Website</th>
+                <th class="bg-custom" scope="col">Main Phone</th>
+                <th class="bg-custom" scope="col">Industry</th>
+                <th class="bg-custom" scope="col">Country & City</th>
+                <th class="bg-custom" scope="col">Address</th>
+                <th class="bg-custom" scope="col">Tags</th>
+                <th class="bg-custom" scope="col">Source</th>
+                <th class="bg-custom" scope="col">Notes</th>
+                <th class="bg-custom" scope="col">Linked Contacts</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Company Name</td>
+                <td>Website</td>
+                <td>Main Phone</td>
+                <td>Industry</td>
+                <td>Country & City</td>
+                <td>Address</td>
+                <td>Tags</td>
+                <td>Source</td>
+                <td>Notes</td>
+                <td>Linked Contacts</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}

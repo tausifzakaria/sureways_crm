@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row row-cols-1 row-cols-md-2 align-items-center justify-content-start">
+        <div class="col">
+            <h2 class="text-color m-0 p-0 text-capitalize"><span class="greet"></span> {{request.user}} 👋🏻</h2>
+            <small>Welcome back to your CRM overview.</small>
+        </div>
+        <div class="col text-end">
+            Last updated: Sep 2, 2025 at 9:25 PM
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 my-4">
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="circle rounded-circle bg-primary-subtle"></div>
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Total Contacts</p>
+                        <h1 class="card-title p-0 m-0">3</h1>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-people-fill fs-3 text-primary-emphasis bg-primary-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="circle rounded-circle bg-success-subtle"></div>
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Companies</p>
+                        <h1 class="card-title p-0 m-0">0</h1>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-buildings fs-3 text-success-emphasis bg-success-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="circle rounded-circle bg-warning-subtle"></div>
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Pending Tasks</p>
+                        <h1 class="card-title p-0 m-0">0</h1>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-check2-square fs-3 text-warning-emphasis bg-warning-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="circle rounded-circle bg-info-subtle"></div>
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Recent Activities</p>
+                        <h1 class="card-title p-0 m-0">0</h1>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-activity fs-3 text-info-emphasis bg-info-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2">
+        <div class="col col-md-8">
+            <div class="card p-3 rounded-4 mb-4" style="width: 99%;">
+                <h5 class="card-title"><i class="bi bi-people"></i> Recent Contacts</h5>
+                <div class="card-body">
+                    <div class="row row-cols-3 align-items-center p-2 rounded-4 justify-content-between my-3 bg-hover">
+                        <div class="col col-1 text-center">
+                            <span
+                                class="bg-secondary-subtle p-2 d-block d-flex align-items-center justify-content-center rounded-circle"
+                                style="width: 50px; height: 50px;">A</span>
+                        </div>
+                        <div class="col col-8 p-0">
+                            <h6 class="fw-semibold p-0 m-0">Ahmed Al-Mahmoud <span
+                                    class="ms-2 badge bg-primary-subtle text-primary-emphasis">Procurement</span></h6>
+                            <small>Procurement Manager</small>
+                            <span class="text-muted small d-block"><i class="bi bi-envelope"></i> ahmed@gulftrading.ae
+                                &nbsp;&nbsp; <i class="bi bi-geo-alt"></i> UAE</span>
+                        </div>
+                        <div class="col col-2 text-end">
+                            <p class="small text-muted text-end">Sep 2</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card p-3 rounded-4 mb-4" style="width: 99%;">
+                <h5 class="card-title"><i class="bi bi-geo-alt"></i> Top Locations</h5>
+                <div class="card-body">
+                    <div class="top-contacts">
+                        <div class="row row-cols-3 align-items-center p-2 rounded-4 justify-content-between">
+                            <div class="col col-2">
+                                UAE
+                            </div>
+                            <div class="col col-2 text-end">
+                                1 contact
+                            </div>
+                        </div>
+                        <div class="p-2">
+                            <div class="progress" role="progressbar" style="height: 8px;" aria-label="Basic example"
+                                aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">
+                                <div class="progress-bar bg-primary-subtle" style="width: 100%;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col col-md-4">
+            <div class="card p-3 rounded-4 mb-4" style="width: 99%;">
+                <h5 class="card-title"><i class="bi bi-check2-square"></i> Upcoming Task</h5>
+                <div class="card-body">
+                    {% if tasks %}
+                    <ul class="list-group">
+                        {% for task in tasks %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ task.name }}
+                            <span class="badge bg-primary rounded-pill">{{ task.due_date }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="text-center">
+                        <i class="bi bi-check2-square fs-1 text-muted"></i>
+                        <p class="text-muted">No pending tasks</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="card p-3 rounded-4 mb-4" style="width: 99%;">
+                <h5 class="card-title"><i class="bi bi-activity"></i> Recent Activities</h5>
+                <div class="card-body">
+                    {% if activities %}
+                    <ul class="list-group">
+                        {% for task in activities %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            {{ task.name }}
+                            <span class="badge bg-primary rounded-pill">{{ task.due_date }}</span>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% else %}
+                    <div class="text-center">
+                        <i class="bi bi-activity fs-1 text-muted"></i>
+                        <p class="text-muted">No pending activities</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const greetings = ["Welcome back", "Hello again", "Good to see you"];
+    const randomGreeting = greetings[Math.floor(Math.random() * greetings.length)];
+    document.querySelector(".greet").textContent = randomGreeting;
+</script>
+{% endblock %}

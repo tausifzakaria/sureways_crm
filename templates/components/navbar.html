@@ -1,0 +1,74 @@
+{% load static %}
+<div class="d-flex flex-column justify-content-between vh-100 flex-shrink-0 py-3">
+    <!-- Logo / Brand -->
+    <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-decoration-none">
+        <img src="{% static 'icon.png' %}" alt="Logo" class="img-fluid" style="height: 40px;">
+        <span class="w-100">
+            <span class="fs-5 fw-bold ms-2">Sureways CRM</span>
+            <small class="text-muted ms-2">Import-Export</small>
+        </span>
+    </a>
+    <hr>
+
+    <!-- Navigation -->
+    <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item">
+            <a href="{% url 'home' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">
+                <i class="bi bi-grid-fill me-2"></i> Dashboard
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'contacts_management' %}"
+                class="nav-link {% if request.path == '/contacts/' %}active{% endif %}">
+                <i class="bi bi-people me-2"></i> Contacts
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'companies_management' %}"
+                class="nav-link {% if request.path == '/companies/' %}active{% endif %}">
+                <i class="bi bi-building me-2"></i> Companies
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'tasks_management' %}" class="nav-link {% if request.path == '/tasks/' %}active{% endif %}">
+                <i class="bi bi-check2-square me-2"></i> Tasks
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link">
+                <i class="bi bi-activity me-2"></i> Activities
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link">
+                <i class="bi bi-camera me-2"></i> Card Scanner
+            </a>
+        </li>
+        <li>
+            <a href="#" class="nav-link">
+                <i class="bi bi-upload me-2"></i> Import/Export
+            </a>
+        </li>
+    </ul>
+    <hr>
+
+    <!-- Footer Team Info -->
+    <div>
+        <div href="#" class="d-flex text-decoration-none">
+            <img src="{% static 'icon.png' %}" alt="team" width="40" height="40" class="rounded-circle me-2">
+            <div>
+                <strong>Sureways Team</strong><br>
+                <small class="text-muted">Import-Export Solutions</small>
+                <button onclick="toggleLightDarkMode()" id="lightDarkModeButton" class="btn btn-outline-dark me-2 mt-3">
+                    <i class="bi bi-brightness-high-fill" id="iconlightDark"></i>
+                </button>
+                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline-dark buttonMode mt-3">
+                        <i class="bi bi-box-arrow-right"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
