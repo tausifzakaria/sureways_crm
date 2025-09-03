@@ -1,144 +1,208 @@
 {% extends 'base.html' %}
-{% block title %}Company Management{% endblock %}
+{% block title %}Contact Management{% endblock %}
 {% block content %}
-<div class="mb-3">
-    <h4 class="text-color m-0 p-0">Task Management</h4>
-    <small>Manage all tasks data.</small>
-</div>
-<div class="text-end">
-    <button class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-            class="bi bi-plus-lg"></i> Add Task</button>
-    <div class="modal text-start fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Add Task</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<div class="container-fluid mt-4">
+    <div class="row row-cols-1 row-cols-md-2 align-items-center justify-content-start">
+        <div class="col">
+            <h2 class="text-color m-0 p-0 text-capitalize">Tasks</h2>
+            <small>Manage your follow-ups and action items.</small>
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                    class="bi bi-plus-lg"></i> Add Task</button>
+            <div class="modal text-start fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Task</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form>
+                            <div class="modal-body row g-3">
+                                <!-- Title -->
+                                <div class="mb-3">
+                                    <label for="title" class="form-label">Title *</label>
+                                    <input type="text" class="form-control" id="title" required>
+                                </div>
+
+                                <!-- Description -->
+                                <div class="mb-3">
+                                    <label for="description" class="form-label">Description</label>
+                                    <textarea class="form-control" id="description" rows="3"></textarea>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Related Contact -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="contact_id" class="form-label">Related Contact</label>
+                                        <select class="form-select" id="contact_id">
+                                            <option selected>No contact</option>
+                                            <option value="68b711b02e9bf6e500c198e7">Ahmed Al-Mahmoud</option>
+                                            <option value="68b711b02e9bf6e500c198e8">Sarah Johnson</option>
+                                            <option value="68b711b02e9bf6e500c198e9">Klaus Mueller</option>
+                                            <option value="68b841cd2092a150e286e155">RAHUL C МЕНТА</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Related Company -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="company_id" class="form-label">Related Company</label>
+                                        <select class="form-select" id="company_id">
+                                            <option selected>No company</option>
+                                            <option value="68b711b02e9bf6e500c198e4">Gulf Trading LLC</option>
+                                            <option value="68b711b02e9bf6e500c198e5">Polymer Solutions Inc</option>
+                                            <option value="68b711b02e9bf6e500c198e6">European Steel Works</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Due Date -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="due_date" class="form-label">Due Date *</label>
+                                        <input type="date" class="form-control" id="due_date" required>
+                                    </div>
+
+                                    <!-- Type -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="type" class="form-label">Type</label>
+                                        <select class="form-select" id="type">
+                                            <option>Select type</option>
+                                            <option value="Follow-up Call">Follow-up Call</option>
+                                            <option value="Send Quote">Send Quote</option>
+                                            <option value="Meeting">Meeting</option>
+                                            <option value="Email">Email</option>
+                                            <option value="Research">Research</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Priority -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="priority" class="form-label">Priority</label>
+                                        <select class="form-select" id="priority">
+                                            <option value="Low">Low</option>
+                                            <option value="Medium" selected>Medium</option>
+                                            <option value="High">High</option>
+                                            <option value="Urgent">Urgent</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Status -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="status" class="form-label">Status</label>
+                                        <select class="form-select" id="status">
+                                            <option value="Pending" selected>Pending</option>
+                                            <option value="In Progress">In Progress</option>
+                                            <option value="Completed">Completed</option>
+                                            <option value="Cancelled">Cancelled</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <form>
-                    <div class="modal-body row g-3">
-                        <!-- Company Name -->
-                        <div class="col-md-6">
-                            <label for="companyName" class="form-label">Company Name</label>
-                            <input type="text" class="form-control" id="companyName" placeholder="Enter company name">
-                        </div>
-
-                        <!-- Website -->
-                        <div class="col-md-6">
-                            <label for="website" class="form-label">Website</label>
-                            <input type="url" class="form-control" id="website" placeholder="https://example.com">
-                        </div>
-
-                        <!-- Main Phone -->
-                        <div class="col-md-6">
-                            <label for="phone" class="form-label">Main Phone</label>
-                            <input type="text" class="form-control" id="phone" placeholder="+91 9876543210">
-                        </div>
-
-                        <!-- Industry -->
-                        <div class="col-md-6">
-                            <label for="industry" class="form-label">Industry</label>
-                            <select id="industry" class="form-select">
-                                <option selected disabled>Choose...</option>
-                                <option>Plastics</option>
-                                <option>FMCG</option>
-                                <option>Steel</option>
-                                <option>Chemicals</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-
-                        <!-- Country & City -->
-                        <div class="col-md-6">
-                            <label for="country" class="form-label">Country</label>
-                            <input type="text" class="form-control" id="country" placeholder="Enter country">
-                        </div>
-
-                        <div class="col-md-6">
-                            <label for="city" class="form-label">City</label>
-                            <input type="text" class="form-control" id="city" placeholder="Enter city">
-                        </div>
-
-                        <!-- Address -->
-                        <div class="col-12">
-                            <label for="address" class="form-label">Address</label>
-                            <textarea class="form-control" id="address" rows="2"
-                                placeholder="Enter company address"></textarea>
-                        </div>
-
-                        <!-- Tags -->
-                        <div class="col-md-6">
-                            <label for="tags" class="form-label">Tags</label>
-                            <input type="text" class="form-control" id="tags"
-                                placeholder="e.g. Supplier, Customer, Forwarder">
-                        </div>
-
-                        <!-- Source -->
-                        <div class="col-md-6">
-                            <label for="source" class="form-label">Source</label>
-                            <select id="source" class="form-select">
-                                <option selected disabled>Choose...</option>
-                                <option>Exhibition</option>
-                                <option>Referral</option>
-                                <option>Import</option>
-                                <option>Web Form</option>
-                                <option>Other</option>
-                            </select>
-                        </div>
-
-                        <!-- Notes -->
-                        <div class="col-12">
-                            <label for="notes" class="form-label">Notes</label>
-                            <textarea class="form-control" id="notes" rows="3"
-                                placeholder="Enter any additional notes"></textarea>
-                        </div>
-
-                        <!-- Linked Contacts -->
-                        <div class="col-12">
-                            <label for="linkedContacts" class="form-label">Linked Contacts</label>
-                            <input type="text" class="form-control" id="linkedContacts"
-                                placeholder="Enter linked contacts">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success">Save changes</button>
-                    </div>
-                </form>
             </div>
         </div>
     </div>
-</div>
-<div class="table-responsive my-4">
-    <table class="table">
-        <thead class="bg-custom">
-            <tr class="bg-custom">
-                <th class="bg-custom" scope="col">Company Name</th>
-                <th class="bg-custom" scope="col">Website</th>
-                <th class="bg-custom" scope="col">Main Phone</th>
-                <th class="bg-custom" scope="col">Industry</th>
-                <th class="bg-custom" scope="col">Country & City</th>
-                <th class="bg-custom" scope="col">Address</th>
-                <th class="bg-custom" scope="col">Tags</th>
-                <th class="bg-custom" scope="col">Source</th>
-                <th class="bg-custom" scope="col">Notes</th>
-                <th class="bg-custom" scope="col">Linked Contacts</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>Company Name</td>
-                <td>Website</td>
-                <td>Main Phone</td>
-                <td>Industry</td>
-                <td>Country & City</td>
-                <td>Address</td>
-                <td>Tags</td>
-                <td>Source</td>
-                <td>Notes</td>
-                <td>Linked Contacts</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 my-4">
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Total Tasks</p>
+                        <h2 class="card-title p-0 m-0">3</h2>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-check2-square fs-3 text-primary-emphasis bg-primary-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Pending</p>
+                        <h2 class="card-title p-0 m-0">0</h2>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-clock fs-3 text-success-emphasis bg-success-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Due Today</p>
+                        <h2 class="card-title p-0 m-0">0</h2>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-calendar fs-3 text-warning-emphasis bg-warning-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Overdue</p>
+                        <h2 class="card-title p-0 m-0">0</h2>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-exclamation-triangle-fill fs-3 text-danger-emphasis bg-danger-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex filter w-100">
+        <form action="" method="get" class="w-100 d-flex align-items-center">
+            <input type="search" class="form-control border-0 border-bottom rounded-0"
+                placeholder="Search companies by name, industry or location">
+            <i class="bi bi-search"></i>
+        </form>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
+        <div class="col my-3">
+            <div class="card p-3 rounded-4 my-3">
+                <div class="row row-cols-2 mt-3">
+                    <div class="col col-9">
+                        <h6 class="fw-semibold p-0 m-0">Send quote for plastic granules</h6>
+                    </div>
+                    <div class="col col-3 text-end">
+                        <i class="bi bi-pencil-square me-2"></i>
+                        <i class="bi bi-check2-square"></i>
+                    </div>
+                    <div class="col col-12 my-2">
+                        <p class="p-0 small my-1">Prepare detailed quotation for 500MT order</p>
+                    </div>
+                    <div class="col col-12 mb-2">
+                        <p class="p-0 small my-1 bg-danger-subtle p-2 rounded-3"><i
+                                class="bi bi-exclamation-triangle"></i> Overdue by 595 days</p>
+                    </div>
+                    <div class="d-flex align-items-center flex-wrap my-2">
+                        <span class="badge bg-success-subtle m-1">FMCG</span>
+                        <span class="badge bg-success-subtle m-1">Active</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
