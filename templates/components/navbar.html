@@ -30,22 +30,22 @@
             </a>
         </li>
         <li>
-            <a href="{% url 'tasks_management' %}" class="nav-link {% if request.path == '/tasks/' %}active{% endif %}">
+            <a href="{% url 'tasks_list' %}" class="nav-link {% if request.path == '/tasks/' %}active{% endif %}">
                 <i class="bi bi-check2-square me-2"></i> Tasks
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link">
+            <a href="{% url 'activities' %}" class="nav-link {% if request.path == '/activities/' %}active{% endif %}">
                 <i class="bi bi-activity me-2"></i> Activities
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link">
+            <a href="{% url 'scanner' %}" class="nav-link">
                 <i class="bi bi-camera me-2"></i> Card Scanner
             </a>
         </li>
         <li>
-            <a href="#" class="nav-link">
+            <a href="{% url 'import_export' %}" class="nav-link">
                 <i class="bi bi-upload me-2"></i> Import/Export
             </a>
         </li>
@@ -54,15 +54,17 @@
 
     <!-- Footer Team Info -->
     <div>
-        <div href="#" class="d-flex text-decoration-none">
+        <div href="#" class="d-flex flex-column text-decoration-none">
             <img src="{% static 'icon.png' %}" alt="team" width="40" height="40" class="rounded-circle me-2">
             <div>
                 <strong>Sureways Team</strong><br>
                 <small class="text-muted">Import-Export Solutions</small>
+            </div>
+            <div class="d-flex">
                 <button onclick="toggleLightDarkMode()" id="lightDarkModeButton" class="btn btn-outline-dark me-2 mt-3">
                     <i class="bi bi-brightness-high-fill" id="iconlightDark"></i>
                 </button>
-                <form action="{% url 'logout' %}" method="post" class="d-inline">
+                <form action="{% url 'logout' %}" method="post">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-outline-dark buttonMode mt-3">
                         <i class="bi bi-box-arrow-right"></i>

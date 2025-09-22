@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-5">
+
+  <!-- Page Title -->
+  <div class="text-center mb-5">
+    <h2 class="fw-bold">📊 Data Import & Export</h2>
+    <p class="text-muted">Manage your Companies, Contacts, Tasks, and Activities with ease</p>
+  </div>
+
+  <div class="row g-4">
+
+    <!-- Company -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-buildings fs-1 text-primary"></i>
+          </div>
+          <h5 class="card-title fw-semibold">Companies</h5>
+          <p class="text-muted small">Import or Export Company Data</p>
+          <div class="d-grid gap-2">
+            <a href="{% url 'export_company_csv' %}" class="btn bg-success-subtle text-success-emphasis btn-sm">
+              <i class="bi bi-download"></i> Export
+            </a>
+            <a href="{% url 'download_company_template' %}" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-file-earmark-text"></i> Download Template
+            </a>
+            <form action="{% url 'import_company_csv' %}" method="post" enctype="multipart/form-data" class="d-grid gap-2">
+              {% csrf_token %}
+              <input type="file" name="file" class="form-control form-control-sm" accept=".csv" required>
+              <button type="submit" class="btn bg-primary-subtle text-primary-emphasis btn-sm">
+                <i class="bi bi-upload"></i> Import
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-people fs-1 text-info"></i>
+          </div>
+          <h5 class="card-title fw-semibold">Contacts</h5>
+          <p class="text-muted small">Import or Export Contact Data</p>
+          <div class="d-grid gap-2">
+            <a href="{% url 'export_contact_csv' %}" class="btn bg-success-subtle text-success-emphasis btn-sm">
+              <i class="bi bi-download"></i> Export
+            </a>
+            <a href="{% url 'download_contact_template' %}" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-file-earmark-text"></i> Download Template
+            </a>
+            <form action="{% url 'import_contact_csv' %}" method="post" enctype="multipart/form-data" class="d-grid gap-2">
+              {% csrf_token %}
+              <input type="file" name="file" class="form-control form-control-sm" accept=".csv" required>
+              <button type="submit" class="btn bg-primary-subtle text-primary-emphasis btn-sm">
+                <i class="bi bi-upload"></i> Import
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Task -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-check2-square fs-1 text-warning"></i>
+          </div>
+          <h5 class="card-title fw-semibold">Tasks</h5>
+          <p class="text-muted small">Import or Export Task Data</p>
+          <div class="d-grid gap-2">
+            <a href="{% url 'export_task_csv' %}" class="btn bg-success-subtle text-success-emphasis btn-sm">
+              <i class="bi bi-download"></i> Export
+            </a>
+            <a href="{% url 'download_task_template' %}" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-file-earmark-text"></i> Download Template
+            </a>
+            <form action="{% url 'import_task_csv' %}" method="post" enctype="multipart/form-data" class="d-grid gap-2">
+              {% csrf_token %}
+              <input type="file" name="file" class="form-control form-control-sm" accept=".csv" required>
+              <button type="submit" class="btn bg-primary-subtle text-primary-emphasis btn-sm">
+                <i class="bi bi-upload"></i> Import
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Activity -->
+    <div class="col-md-6 col-lg-3">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-body text-center">
+          <div class="mb-3">
+            <i class="bi bi-journal-text fs-1 text-danger"></i>
+          </div>
+          <h5 class="card-title fw-semibold">Activities</h5>
+          <p class="text-muted small">Import or Export Activity Data</p>
+          <div class="d-grid gap-2">
+            <a href="{% url 'export_activity_csv' %}" class="btn bg-success-subtle text-success-emphasis btn-sm">
+              <i class="bi bi-download"></i> Export
+            </a>
+            <a href="{% url 'download_activity_template' %}" class="btn btn-outline-secondary btn-sm">
+              <i class="bi bi-file-earmark-text"></i> Download Template
+            </a>
+            <form action="{% url 'import_activity_csv' %}" method="post" enctype="multipart/form-data" class="d-grid gap-2">
+              {% csrf_token %}
+              <input type="file" name="file" class="form-control form-control-sm" accept=".csv" required>
+              <button type="submit" class="btn bg-primary-subtle text-primary-emphasis btn-sm">
+                <i class="bi bi-upload"></i> Import
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

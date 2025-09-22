@@ -8,8 +8,9 @@
             <small>Manage your business relationships and partnerships.</small>
         </div>
         <div class="col text-end">
-            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
-                    class="bi bi-plus-lg"></i> Add Company</button>
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="bi bi-plus-lg"></i> Add Company
+            </button>
             <div class="modal text-start fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -18,32 +19,29 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Add Company</h1>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <form>
+                        <form id="companyForm" class="p-3" method="POST" action="{% url 'company_save' %}">
+                            {% csrf_token %}
                             <div class="modal-body row g-3">
-                                <!-- Company Name -->
+                                <!-- hidden id must be "id" to match backend (request.POST.get("id")) -->
+                                <input type="hidden" id="id" name="id">
                                 <div class="col-md-12">
                                     <label for="companyName" class="form-label">Company Name</label>
-                                    <input type="text" class="form-control" id="companyName"
+                                    <input type="text" class="form-control" name="companyName" id="companyName"
                                         placeholder="Enter company name">
                                 </div>
-
-                                <!-- Website -->
                                 <div class="col-md-6">
                                     <label for="website" class="form-label">Website</label>
-                                    <input type="url" class="form-control" id="website"
+                                    <input type="url" class="form-control" name="website" id="website"
                                         placeholder="https://example.com">
                                 </div>
-
-                                <!-- Main Phone -->
                                 <div class="col-md-6">
                                     <label for="phone" class="form-label">Main Phone</label>
-                                    <input type="text" class="form-control" id="phone" placeholder="+91 9876543210">
+                                    <input type="text" class="form-control" name="phone" id="phone"
+                                        placeholder="+91 9876543210">
                                 </div>
-
-                                <!-- Industry -->
                                 <div class="col-md-6">
                                     <label for="industry" class="form-label">Industry</label>
-                                    <select id="industry" class="form-select">
+                                    <select id="industry" name="industry" class="form-select">
                                         <option selected disabled>Choose...</option>
                                         <option value="Plastics">Plastics</option>
                                         <option value="FMCG">FMCG</option>
@@ -56,10 +54,9 @@
                                         <option value="Other">Other</option>
                                     </select>
                                 </div>
-                                <!-- Status -->
                                 <div class="col-md-6">
                                     <label for="status" class="form-label">Status</label>
-                                    <select id="status" class="form-select">
+                                    <select id="status" name="status" class="form-select">
                                         <option selected disabled>Choose...</option>
                                         <option value="Active">Active</option>
                                         <option value="Prospect">Prospect</option>
@@ -67,36 +64,29 @@
                                         <option value="Blacklisted">Blacklisted</option>
                                     </select>
                                 </div>
-
-                                <!-- Country & City -->
                                 <div class="col-md-6">
                                     <label for="country" class="form-label">Country</label>
-                                    <input type="text" class="form-control" id="country" placeholder="Enter country">
+                                    <input type="text" name="country" class="form-control" id="country"
+                                        placeholder="Enter country">
                                 </div>
-
                                 <div class="col-md-6">
                                     <label for="city" class="form-label">City</label>
-                                    <input type="text" class="form-control" id="city" placeholder="Enter city">
+                                    <input type="text" name="city" class="form-control" id="city"
+                                        placeholder="Enter city">
                                 </div>
-
-                                <!-- Address -->
                                 <div class="col-12">
                                     <label for="address" class="form-label">Address</label>
-                                    <textarea class="form-control" id="address" rows="2"
+                                    <textarea class="form-control" name="address" id="address" rows="2"
                                         placeholder="Enter company address"></textarea>
                                 </div>
-
-                                <!-- Tags -->
                                 <div class="col-md-6">
                                     <label for="tags" class="form-label">Tags</label>
-                                    <input type="text" class="form-control" id="tags"
+                                    <input type="text" name="tags" class="form-control" id="tags"
                                         placeholder="e.g. Supplier, Customer, Forwarder">
                                 </div>
-
-                                <!-- Source -->
                                 <div class="col-md-6">
                                     <label for="source" class="form-label">Source</label>
-                                    <select id="source" class="form-select">
+                                    <select id="source" name="source" class="form-select">
                                         <option selected disabled>Choose...</option>
                                         <option>Exhibition</option>
                                         <option>Referral</option>
@@ -105,19 +95,18 @@
                                         <option>Other</option>
                                     </select>
                                 </div>
-
-                                <!-- Notes -->
                                 <div class="col-12">
                                     <label for="notes" class="form-label">Notes</label>
-                                    <textarea class="form-control" id="notes" rows="3"
+                                    <textarea class="form-control" name="notes" id="notes" rows="3"
                                         placeholder="Enter any additional notes"></textarea>
                                 </div>
-
-                                <!-- Linked Contacts -->
                                 <div class="col-12">
                                     <label for="linkedContacts" class="form-label">Linked Contacts</label>
-                                    <input type="text" class="form-control" id="linkedContacts"
-                                        placeholder="Enter linked contacts">
+                                    <select id="linkedContacts" name="linkedContacts" class="form-select" multiple size="5">
+                                        {% for contact in contacts %}
+                                            <option value="{{ contact.id }}">{{ contact.full_name }}</option>
+                                        {% endfor %}
+                                    </select>
                                 </div>
                             </div>
                             <div class="modal-footer">
@@ -132,11 +121,11 @@
     </div>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 my-4">
         <div class="col">
-            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+            <div class="card position-relative overflow-hidden rounded-4" style="height:97%;">
                 <div class="card-body d-flex justify-content-between align-items-center z-2">
                     <div>
                         <p>Total Companies</p>
-                        <h2 class="card-title p-0 m-0">3</h2>
+                        <h2 id="totalCompaniesCount" class="card-title p-0 m-0">3</h2>
                     </div>
                     <div class="pe-3">
                         <i
@@ -146,11 +135,11 @@
             </div>
         </div>
         <div class="col">
-            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+            <div class="card position-relative overflow-hidden rounded-4" style="height:97%;">
                 <div class="card-body d-flex justify-content-between align-items-center z-2">
                     <div>
                         <p>Active</p>
-                        <h2 class="card-title p-0 m-0">0</h2>
+                        <h2 id="activeClientsCount" class="card-title p-0 m-0">0</h2>
                     </div>
                     <div class="pe-3">
                         <i
@@ -160,11 +149,11 @@
             </div>
         </div>
         <div class="col">
-            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+            <div class="card position-relative overflow-hidden rounded-4" style="height:97%;">
                 <div class="card-body d-flex justify-content-between align-items-center z-2">
                     <div>
                         <p>Industries</p>
-                        <h2 class="card-title p-0 m-0">0</h2>
+                        <h2 id="industriesCount" class="card-title p-0 m-0">0</h2>
                     </div>
                     <div class="pe-3">
                         <i
@@ -174,11 +163,11 @@
             </div>
         </div>
         <div class="col">
-            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+            <div class="card position-relative overflow-hidden rounded-4" style="height:97%;">
                 <div class="card-body d-flex justify-content-between align-items-center z-2">
                     <div>
                         <p>Avg Contact</p>
-                        <h2 class="card-title p-0 m-0">0</h2>
+                        <h2 id="avgContactCount" class="card-title p-0 m-0">0</h2>
                     </div>
                     <div class="pe-3">
                         <i
@@ -190,40 +179,161 @@
     </div>
     <div class="d-flex filter w-100">
         <form action="" method="get" class="w-100 d-flex align-items-center">
-            <input type="search" class="form-control border-0 border-bottom rounded-0"
+            <input type="search" class="form-control border-0 shadow-none border-bottom rounded-0"
                 placeholder="Search companies by name, industry or location">
-            <i class="bi bi-search"></i>
+            <i class="bi bi-search mx-3"></i>
         </form>
     </div>
+    {% if companies %}
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-        <div class="col my-3">
-            <div class="card p-2 rounded-4 my-3">
-                <div class="row row-cols-3 mt-3">
-                    <div class="col col-2 text-center">
-                        <i
-                            class="bi bi-buildings fs-3 text-primary-emphasis bg-primary-subtle p-2 border border-light rounded-3"></i>
+        {% for company in companies %}
+        <div class="col my-3 contact-card">
+            <div class="card p-2 rounded-4 my-3" data-name="{{ company.name }}" data-website="{{ company.website }}"
+                data-phone="{{ company.phone }}" data-industry="{{ company.industry }}"
+                data-status="{{ company.status }}" data-country="{{ company.country }}" data-city="{{ company.city }}"
+                data-address="{{ company.address }}" data-tags="{{ company.tags }}" data-source="{{ company.source }}"
+                data-notes="{{ company.notes }}" data-linked-contacts="{{ company.linked_contacts }}">
+                <div class="row row-cols-2 mt-3">
+                    <div class="col col-3 text-center">
+                        <span
+                            class="bg-secondary-subtle fw-bold p-2 d-block d-flex align-items-center justify-content-center rounded-circle"
+                            style="width:50px;height:50px;">
+                            {{ company.name|first|upper }}
+                        </span>
                     </div>
-                    <div class="col col-9 p-0">
-                        <h6 class="fw-semibold p-0 m-0">Gulf Trading LLC</h6>
-                        <small>FMGC</small>
+                    <div class="col col-8 p-0">
+                        <h6 class="fw-semibold p-0 m-0 text-truncate overflow-hidden w-100" title="{{ company.name }}">
+                            {{ company.name }}</h6>
+                        <small class="text-truncate overflow-hidden w-100">{{ company.industry }}</small>
                     </div>
                     <div class="col col-1 p-0">
-                        <i class="bi bi-pencil-square"></i>
+                        <!-- edit icon has data-* attributes used to prefill modal -->
+                        <i class="bi bi-pencil-square text-warning editcompanyBtn" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-id="{{ company.id }}"
+                            data-company-name="{{ company.name }}" data-website="{{ company.website }}"
+                            data-phone="{{ company.phone }}" data-industry="{{ company.industry }}"
+                            data-status="{{ company.status }}" data-country="{{ company.country }}"
+                            data-city="{{ company.city }}" data-address="{{ company.address }}"
+                            data-tags="{{ company.tags }}" data-source="{{ company.source }}"
+                            data-notes="{{ company.notes }}"
+                            data-linked-contacts="{% for c in company.linked_contacts.all %}{{ c.id }}{% if not forloop.last %},{% endif %}{% endfor %}">
+                        </i>
+                        <form action="{% url 'company_delete' company.id %}" method="POST" class="d-inline">
+                            {% csrf_token %}
+                            <button class="btn bg-none border-0 outline-0 shadow-none p-0" type="submit">
+                                <i class="bi bi-trash text-danger"></i>
+                            </button>
+                        </form>
                     </div>
                     <div class="col col-12 my-3 px-4">
-                        <p class="p-0 small my-1"><i class="me-2 bi bi-globe"></i> www.gulftrading.ae</p>
-                        <p class="p-0 small my-1"><i class="me-2 bi bi-phone"></i> +971 50 123 4567</p>
-                        <p class="p-0 small my-1"><i class="me-2 bi bi-geo-alt"></i> Dubai, UAE</p>
-                        <p class="p-0 small my-1"><i class="me-2 bi bi-people"></i> 0 Contacts</p>
+                        <p class="p-0 small my-1 w-100 overflow-hidden text-truncate" title="{{ company.website }}"><i
+                                class="me-2 bi bi-globe"></i> {{ company.website }}</p>
+                        <p class="p-0 small my-1"><i class="me-2 bi bi-phone"></i> {{ company.phone }}</p>
+                        <p class="p-0 small my-1"><i class="me-2 bi bi-geo-alt"></i> {{ company.city }}, {{ company.country }}</p>
+                        <p class="p-0 small my-1"><i class="me-2 bi bi-people"></i> {{ company.linked_contacts.all|length }}
+                            Contacts</p>
                         <div class="d-flex align-items-center flex-wrap my-2">
-                            <span class="badge bg-success-subtle m-1">FMCG</span>
-                            <span class="badge bg-success-subtle m-1">Active</span>
+                            <span class="badge bg-warning-subtle text-warning-emphasis m-1">{{ company.industry }}</span>
+                            <span class="badge bg-info-subtle text-info-emphasis m-1">{{ company.status }}</span>
+                            <span class="badge bg-primary-subtle text-primary-emphasis m-1">{{ company.source }}</span>
                         </div>
-                        <p class="p-0 m-0 small my-1"><i class="me-2 bi bi-tag"></i> Tags , Come here</p>
+                        <p class="p-0 m-0 small my-1"><i class="me-2 bi bi-tag"></i> {{ company.tags }}</p>
                     </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
+    {% else %}
+    <div class="text-center my-5">
+        <h2><i class="bi bi-database-exclamation"></i></h2>
+        No data available
+    </div>
+    {% endif %}
 </div>
+
+<!-- Modal prefill / reset script -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("exampleModal");
+        const title = document.getElementById("exampleModalLabel");
+        const form = document.getElementById("companyForm");
+
+        function resetForm() {
+            form.reset();
+            // clear hidden id (so backend creates new when adding)
+            const hidden = document.getElementById("id");
+            if (hidden) hidden.value = "";
+            // If you want to clear the linkedContacts select explicitly:
+            const linked = document.getElementById("linkedContacts");
+            if (linked) linked.value = "";
+        }
+
+        // Using Bootstrap modal 'show.bs.modal' event. `e.relatedTarget` is the element that triggered the modal.
+        modal.addEventListener("show.bs.modal", function (e) {
+            const trigger = e.relatedTarget; // add or edit button/icon
+            resetForm();
+
+            // If trigger has no data-id, treat as "Add"
+            if (!trigger || !trigger.dataset.id) {
+                title.textContent = "Add Company";
+                return;
+            }
+
+            // Edit flow — prefill inputs
+            title.textContent = "Edit Company";
+            document.getElementById("id").value = trigger.dataset.id || "";
+            document.getElementById("companyName").value = trigger.dataset.companyName || "";
+            document.getElementById("website").value = trigger.dataset.website || "";
+            document.getElementById("phone").value = trigger.dataset.phone || "";
+            if (trigger.dataset.industry) document.getElementById("industry").value = trigger.dataset.industry;
+            if (trigger.dataset.status) document.getElementById("status").value = trigger.dataset.status;
+            document.getElementById("country").value = trigger.dataset.country || "";
+            document.getElementById("city").value = trigger.dataset.city || "";
+            document.getElementById("address").value = trigger.dataset.address || "";
+            document.getElementById("tags").value = trigger.dataset.tags || "";
+            if (trigger.dataset.source) document.getElementById("source").value = trigger.dataset.source;
+            document.getElementById("notes").value = trigger.dataset.notes || "";
+            if (trigger.dataset.linkedContacts) {
+                const linkedSelect = document.getElementById("linkedContacts");
+                const ids = trigger.dataset.linkedContacts.split(",").map(id => id.trim());
+                Array.from(linkedSelect.options).forEach(opt => {
+                    opt.selected = ids.includes(opt.value);
+                });
+            }
+        });
+    });
+</script>
+
+<!-- Dashboard counts fetch -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch("{% url 'company_dashboard_counts' %}")
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById("totalCompaniesCount").innerText = data.totalCompanies;
+                document.getElementById("activeClientsCount").innerText = data.active;
+                document.getElementById("industriesCount").innerText = data.industries;
+                document.getElementById("avgContactCount").innerText = data.avgContacts;
+            })
+            .catch(err => console.error("Error fetching counts:", err));
+    });
+</script>
+
+<!-- Search/filter -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector("input[type='search']");
+        const cards = document.querySelectorAll(".contact-card");
+        function applySearch() {
+            const q = searchInput.value.toLowerCase().trim();
+            cards.forEach(card => {
+                const text = card.textContent.toLowerCase();
+                card.style.display = !q || text.includes(q) ? "block" : "none";
+            });
+        }
+        searchInput.addEventListener("input", applySearch);
+        cards.forEach(c => c.style.display = "block");
+    });
+</script>
 {% endblock %}

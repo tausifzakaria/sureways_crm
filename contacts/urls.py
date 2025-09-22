@@ -1,5 +1,9 @@
 from django.urls import path
-from .views import ContactManagement
+from . import views
+
 urlpatterns = [
-    path('', ContactManagement, name='contacts_management'),
+    path("contacts_management/", views.contact_list, name="contacts_management"),
+    path("save/", views.contact_save, name="contact_save"),   # <- new
+    path("delete/<int:pk>/", views.contact_delete, name="contact_delete"),
+    path("dashboard-counts/", views.dashboard_counts, name="dashboard_counts"),
 ]

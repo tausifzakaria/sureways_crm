@@ -1,0 +1,298 @@
+{% extends 'base.html' %}
+{% block title %}Activity Management{% endblock %}
+{% block content %}
+<div class="container-fluid mt-4">
+    <div class="row row-cols-1 row-cols-md-2 align-items-center justify-content-start">
+        <div class="col">
+            <h2 class="text-color m-0 p-0 text-capitalize">Activities</h2>
+            <small>Track all your interactions and communications.</small>
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal"><i
+                    class="bi bi-plus-lg"></i> Add Activity</button>
+            <div class="modal text-start fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Add Activity</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <form method="post" id="activityForm" action="{% url 'activity_add' %}">
+                            {% csrf_token %}
+                            <div class="modal-body">
+                                <input type="hidden" id="id" name="id" value="">
+                                <div class="row">
+                                    <!-- Type -->
+                                    <div class="col-md-6 mb-3">
+                                        <label for="type" class="form-label">Type *</label>
+                                        <select class="form-select" name="type" id="type" required>
+                                            <option selected disabled>Select type</option>
+                                            <option value="Call">Call</option>
+                                            <option value="Email">Email</option>
+                                            <option value="Meeting">Meeting</option>
+                                            <option value="WhatsApp">WhatsApp</option>
+                                            <option value="SMS">SMS</option>
+                                            <option value="Note">Note</option>
+                                        </select>
+                                    </div>
+
+                                    <!-- Date -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Date & Time *</label>
+                                        <input type="datetime-local" class="form-control" id="date_time"
+                                            name="date_time" required>
+                                    </div>
+
+                                    <!-- Title -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Title *</label>
+                                        <input type="text" class="form-control" id="title" name="title" required>
+                                    </div>
+
+                                    <!-- Description -->
+                                    <div class="mb-3">
+                                        <label for="description" class="form-label">Description</label>
+                                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                    </div>
+
+                                    <!-- Contact -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Related Contact</label>
+                                        <select class="form-select" name="contact" id="contact_id">
+                                            <option value="">No contact</option>
+                                            {% for c in contacts %}
+                                            <option value="{{ c.id }}">{{ c.full_name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <!-- Company -->
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Related Company</label>
+                                        <select class="form-select" name="company" id="company_id">
+                                            <option value="">No company</option>
+                                            {% for co in companies %}
+                                            <option value="{{ co.id }}">{{ co.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+
+                                    <!-- Outcome -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Outcome</label>
+                                        <select class="form-select" name="outcome" id="outcome">
+                                            <option value="">No outcome</option>
+                                            <option value="Positive">Positive</option>
+                                            <option value="Neutral">Neutral</option>
+                                            <option value="Negative">Negative</option>
+                                            <option value="Follow-up Required">Follow-up Required</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-success">Save changes</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 my-4">
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Total Activities</p>
+                        <h2 class="card-title p-0 m-0">{{ stats.total }}</h2>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-activity fs-3 text-primary-emphasis bg-primary-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Calls</p>
+                        <h2 class="card-title p-0 m-0">{{ stats.calls }}</h2>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-phone fs-3 text-success-emphasis bg-success-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Emails</p>
+                        <h2 class="card-title p-0 m-0">{{ stats.emails }}</h2>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-envelope fs-3 text-warning-emphasis bg-warning-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card position-relative overflow-hidden rounded-4" style="height: 97%;">
+                <div class="card-body d-flex justify-content-between align-items-center z-2">
+                    <div>
+                        <p>Mettings</p>
+                        <h2 class="card-title p-0 m-0">{{ stats.meetings }}</h2>
+                    </div>
+                    <div class="pe-3">
+                        <i
+                            class="bi bi-calendar fs-3 text-danger-emphasis bg-danger-subtle p-2 border border-light rounded-3"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex filter w-100">
+        <form action="" method="get" class="w-100 d-flex align-items-center">
+            <input type="search" class="form-control border-0 shadow-none border-bottom rounded-0"
+                placeholder="Search activities..." aria-label="Search" name="search">
+            <i class="bi bi-search mx-3"></i>
+        </form>
+    </div>
+    <div class="row row-cols-1">
+        <div class="col my-3">
+            {% if activities %}
+            {% for act in activities %}
+            <div class="card p-3 rounded-4 my-3 contact-card" data-id="{{ act.id }}" data-type="{{ act.type }}"
+                data-title="{{ act.title }}" data-contact="{{ act.contact.id }}" data-company="{{ act.company.id }}"
+                data-outcome="{{ act.outcome }}" data-date_time="{{ act.date_time|date:'Y-m-d H:i:s' }}" data-description="{{ act.description|escape }}">
+                <div class="row row-cols-2 align-items-center justify-content-between">
+                    <div class="col">
+                        <div class="row row-cols-2 align-items-center">
+                            <div class="col col-1">
+                                {% if act.type == "Call" %}
+                                <i
+                                    class="bi bi-phone fs-3 text-primary-emphasis bg-primary-subtle p-2 border border-light rounded-3"></i>
+                                {% elif act.type == "Email" %}
+                                <i
+                                    class="bi bi-envelope fs-3 text-warning-emphasis bg-warning-subtle p-2 border border-light rounded-3"></i>
+                                {% elif act.type == "Meeting" %}
+                                <i
+                                    class="bi bi-calendar fs-3 text-danger-emphasis bg-danger-subtle p-2 border border-light rounded-3"></i>
+                                {% else %}
+                                <i class="bi bi-sticky fs-3 text-muted bg-light p-2 border border-light rounded-3"></i>
+                                {% endif %}
+                            </div>
+                            <div class="col col-10 ms-3">
+                                <p class="m-0">{{ act.title }}</p>
+                                <small class="text-muted">{{ act.date_time|date:"M d, Y \\a\\t h:i A" }}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col col-2 text-end">
+                        <i class="bi bi-pencil-square text-warning" data-bs-toggle="modal"
+                            data-bs-target="#exampleModal" data-id="{{ act.id }}" data-type="{{ act.type }}"
+                            data-title="{{ act.title }}" data-contact="{{ act.contact.id }}"
+                            data-company="{{ act.company.id }}" data-outcome="{{ act.outcome }}"
+                            data-date_time="{{ act.date_time|date:'Y-m-d H:i:s' }}" data-description="{{ act.description|escape }}"></i>
+                        <form action="{% url 'activity_delete' act.id %}" method="post" class="d-inline"
+                            onsubmit="return confirm('Are you sure you want to delete this activity?');">
+                            {% csrf_token %}
+                            <i onclick="this.closest('form').submit();" class="bi bi-trash text-danger"></i>
+                        </form>
+                    </div>
+                </div>
+                <p class="py-2 my-2">{{ act.description }}</p>
+                <div class="row row-cols-2 align-items-center justify-content-between">
+                    <div class="col">
+                        {% if act.outcome %}
+                        <span class="badge bg-success-subtle text-success-emphasis">{{ act.outcome }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="col text-end">
+                        <span>{{ act.created_at|timesince }} ago</span>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="text-center my-5">
+                <h2><i class="bi bi-database-exclamation"></i></h2>
+                No data available
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const modal = document.getElementById("exampleModal");
+        const form = document.getElementById("activityForm");
+
+        if (modal) {
+            modal.addEventListener("show.bs.modal", function (e) {
+                const trigger = e.relatedTarget;
+                // reset form
+                form.reset();
+                document.getElementById("id").value = "";
+
+                if (!trigger || !trigger.dataset.id) {
+                    // Add mode
+                    document.getElementById("exampleModalLabel").textContent = "Add Activities";
+                    return;
+                }
+                // Edit mode
+                document.getElementById("exampleModalLabel").textContent = "Edit Activities";
+                document.getElementById("id").value = trigger.dataset.id || "";
+                if (trigger.dataset.type) document.getElementById("type").value = trigger.dataset.type;
+                if (trigger.dataset.date_time) {
+                    document.getElementById("date_time").value = trigger.dataset.date_time.replace(" ", "T");
+                }
+                document.getElementById("title").value = trigger.dataset.title || "";
+                document.getElementById("description").value = trigger.dataset.description || "";
+                document.getElementById("contact_id").value = trigger.dataset.contact || "";
+                document.getElementById("company_id").value = trigger.dataset.company || "";
+                document.getElementById("outcome").value = trigger.dataset.outcome || "";
+            });
+        }
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector("input[type='search']");
+        const cards = document.querySelectorAll(".contact-card");
+
+        function applySearch() {
+            const query = searchInput.value.toLowerCase().trim();
+
+            cards.forEach(card => {
+                // Collect all searchable values from data-* attributes
+                const searchableText = Object.values(card.dataset)
+                    .join(" ")
+                    .toLowerCase();
+
+                // Check if query matches anything
+                if (query === "" || searchableText.includes(query)) {
+                    card.style.display = "block";
+                } else {
+                    card.style.display = "none";
+                }
+            });
+        }
+
+        // Listen for typing in the search input
+        searchInput.addEventListener("input", applySearch);
+
+        // ✅ Initial state → show all cards
+        cards.forEach(card => card.style.display = "block");
+    });
+</script>
+{% endblock %}

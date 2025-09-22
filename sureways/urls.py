@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from .views import Home, Login, Logout
+from .views import Home, Login, Logout, import_export_page,export_company_csv, export_contact_csv, export_task_csv, export_activity_csv , import_company_csv, import_contact_csv, import_task_csv, import_activity_csv, download_company_template, download_contact_template, download_task_template, download_activity_template
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Home, name='home'),
@@ -28,6 +28,23 @@ urlpatterns = [
     path('companies/', include('companies.urls')),
     path('tasks/', include('tasks.urls')),
     path('scanner/', include('scanner.urls')),
+    path("import-export/", import_export_page, name="import_export"),  # main page
+        # Company
+    path("export/company/", export_company_csv, name="export_company_csv"),
+    path("import/company/", import_company_csv, name="import_company_csv"),
+    path("template/company/", download_company_template, name="download_company_template"),
+    # Contact
+    path("export/contact/", export_contact_csv, name="export_contact_csv"),
+    path("import/contact/", import_contact_csv, name="import_contact_csv"),
+    path("template/contact/", download_contact_template, name="download_contact_template"),
+    # Task
+    path("export/task/", export_task_csv, name="export_task_csv"),
+    path("import/task/", import_task_csv, name="import_task_csv"),
+    path("template/task/", download_task_template, name="download_task_template"),
+    # Activity
+    path("export/activity/", export_activity_csv, name="export_activity_csv"),
+    path("import/activity/", import_activity_csv, name="import_activity_csv"),
+    path("template/activity/", download_activity_template, name="download_activity_template"),
 ]
 
 if settings.DEBUG:
