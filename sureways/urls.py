@@ -45,7 +45,4 @@ urlpatterns = [
     path("export/activity/", export_activity_csv, name="export_activity_csv"),
     path("import/activity/", import_activity_csv, name="import_activity_csv"),
     path("template/activity/", download_activity_template, name="download_activity_template"),
-]
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
